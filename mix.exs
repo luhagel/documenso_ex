@@ -1,13 +1,24 @@
 defmodule Documenso.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/luhagel/documenso_ex"
+  @version "0.1.0"
+
   def project do
     [
       app: :documenso_ex,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.17",
+      source_url: @source_url,
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      description: description(),
+      licenses: ["MIT"],
+      links: [
+        %{name: "GitHub", url: @source_url},
+        %{name: "Docs", url: "https://hex.pm/packages/documenso_ex"},
+        %{name: "Contact", url: "https://bsky.social/@luhagel.com"}
+      ]
     ]
   end
 
@@ -21,11 +32,12 @@ defmodule Documenso.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
-      {:oapi_generator, "~> 0.2.0", only: :dev, runtime: false},
       {:req, "~> 0.5.0"},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false}
     ]
+  end
+
+  defp description do
+    "A thin layer around the documenso.com API"
   end
 end
