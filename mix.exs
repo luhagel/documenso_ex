@@ -42,7 +42,7 @@ defmodule Documenso.MixProject do
       links: %{
         "GitHub" => @source_url,
         "Docs" => "https://hex.pm/packages/documenso_ex",
-        "Contact" => "https://bsky.social/@luhagel.com"
+        "Contact" => "https://bsky.app/profile/luhagel.com"
       }
     }
   end
