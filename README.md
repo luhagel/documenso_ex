@@ -19,3 +19,15 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/documenso_ex>.
 
+## Local Development
+
+Create a `config/config.secret.exs` file and set up an api key with documenso.
+
+Example:
+
+```elixir
+import Config
+
+config :documenso_ex,
+  api_key: "api_123456789"
+```
