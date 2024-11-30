@@ -39,11 +39,11 @@ defmodule Documenso.MixProject do
   defp package do
     %{
       licenses: ["MIT"],
-      links: [
-        %{name: "GitHub", url: @source_url},
-        %{name: "Docs", url: "https://hex.pm/packages/documenso_ex"},
-        %{name: "Contact", url: "https://bsky.social/@luhagel.com"}
-      ]
+      links: %{
+        "GitHub" => @source_url,
+        "Docs" => "https://hex.pm/packages/documenso_ex",
+        "Contact" => "https://bsky.social/@luhagel.com"
+      }
     }
   end
 end
