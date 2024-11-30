@@ -13,12 +13,7 @@ defmodule Documenso.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
-      licenses: ["MIT"],
-      links: [
-        %{name: "GitHub", url: @source_url},
-        %{name: "Docs", url: "https://hex.pm/packages/documenso_ex"},
-        %{name: "Contact", url: "https://bsky.social/@luhagel.com"}
-      ]
+      package: package()
     ]
   end
 
@@ -39,5 +34,16 @@ defmodule Documenso.MixProject do
 
   defp description do
     "A thin layer around the documenso.com API"
+  end
+
+  defp package do
+    %{
+      licenses: ["MIT"],
+      links: [
+        %{name: "GitHub", url: @source_url},
+        %{name: "Docs", url: "https://hex.pm/packages/documenso_ex"},
+        %{name: "Contact", url: "https://bsky.social/@luhagel.com"}
+      ]
+    }
   end
 end
