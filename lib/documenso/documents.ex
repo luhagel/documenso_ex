@@ -93,4 +93,17 @@ defmodule Documenso.Documents do
 
     Req.put(url, form: file)
   end
+
+  @doc """
+    Create and upload a document in one step. Return an error tuple if the request fails.
+
+    ## Example
+    >  Documenso.Documents.create_and_upload(%{name: "My Document"}, "path/to/file.pdf")
+  """
+  def create_and_upload(attrs, file) do
+    with {:ok, %Req.Response{status: 201, body: body}} <- create(attrs),
+         {:ok, %Req.Response{status: 200, body: _}} <- upload_document(body["uploadUrl"], file) do
+      {:ok, body}
+    end
+  end
 end
