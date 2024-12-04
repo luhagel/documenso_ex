@@ -83,15 +83,17 @@ defmodule Documenso.Documents do
     Upload a document file. Use this function with the upload url returned by create/1 or create!/1.
     Return an error tuple if the request fails.
   """
-  def upload_document(url, file) do
+  def upload_document(url, file, type \\ :binary)
+
+  def upload_document(url, file, :path) do
     file =
-      if Regex.match?(~r"^(.+)\/([^\/]+)$", file) do
-        File.read!(file) |> Base.encode64()
-      else
-        file
-      end
+      File.read!(file) |> Base.encode64()
 
     Req.put(url, form: file)
+  end
+
+  def upload_document(url, file, :binary) do
+    Req.put(url, body: file)
   end
 
   @doc """
@@ -104,6 +106,8 @@ defmodule Documenso.Documents do
     with {:ok, %Req.Response{status: 201, body: body}} <- create(attrs),
          {:ok, %Req.Response{status: 200, body: _}} <- upload_document(body["uploadUrl"], file) do
       {:ok, body}
+    else
+      {:error, error} -> {:error, error}
     end
   end
 end
