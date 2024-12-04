@@ -110,4 +110,16 @@ defmodule Documenso.Documents do
       {:error, error} -> {:error, error}
     end
   end
+
+  @doc """
+  Get the download url the final document. Return an error tuple if the request fails.
+
+  ## Example
+  > Documenso.Documents.download_url(123456)
+  > {:ok, %{downloadUrl: "https://documenso.com/download/123456"}}
+  """
+  def download_url(id) do
+    "/documents/#{id}/download"
+    |> request()
+  end
 end
