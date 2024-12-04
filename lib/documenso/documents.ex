@@ -103,7 +103,7 @@ defmodule Documenso.Documents do
     >  Documenso.Documents.create_and_upload(%{name: "My Document"}, "path/to/file.pdf")
   """
   def create_and_upload(attrs, file) do
-    with {:ok, %Req.Response{status: 201, body: body}} <- create(attrs),
+    with {:ok, %Req.Response{status: 200, body: body}} <- create(attrs),
          {:ok, %Req.Response{status: 200, body: _}} <- upload_document(body["uploadUrl"], file) do
       {:ok, body}
     else
