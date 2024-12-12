@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.3
+
+- update the `send_without_emails/1` function to also pass the new `sendCompletionEmail` flag
+- enable passing custom options to the `send/2` function
+
 ## 0.2.2
 
 - add a `download_url/1` function to donwload the finished document

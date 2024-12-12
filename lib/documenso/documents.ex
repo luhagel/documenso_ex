@@ -68,15 +68,19 @@ defmodule Documenso.Documents do
   @doc """
     Send a document. Return an error tuple if the request fails.
   """
-  def send(id) do
-    request("/documents/#{id}/send", method: :post)
+  def send(id, opts \\ %{}) do
+    request("/documents/#{id}/send", method: :post, json: opts)
   end
 
   @doc """
-    Send a document. Raise an exception if the request fails.
+    Send a document and prevent all emails from being sent out.
+    Return an error tuple if the request fails.
   """
   def send_without_emails(id) do
-    request("/documents/#{id}/send", method: :post, json: %{sendEmails: false})
+    request("/documents/#{id}/send",
+      method: :post,
+      json: %{sendEmails: false, sendCompletionEmail: false}
+    )
   end
 
   @doc """
