@@ -79,8 +79,24 @@ defmodule Documenso.Documents do
   def send_without_emails(id) do
     request("/documents/#{id}/send",
       method: :post,
-      json: %{sendEmails: false, sendCompletionEmail: false}
+      json: %{sendEmails: false, sendCompletionEmails: false}
     )
+  end
+
+  @doc """
+    Delete a document.
+    Raise an exception if the request fails.
+  """
+  def delete!(id) do
+    request!("/documents/#{id}", method: :delete)
+  end
+
+  @doc """
+    Delete a document.
+    Return an error tuple if the request fails.
+  """
+  def delete(id) do
+    request("/documents/#{id}", method: :delete)
   end
 
   @doc """

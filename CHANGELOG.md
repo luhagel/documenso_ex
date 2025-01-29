@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+- add a document `delete/1` and `delete!` function
+- fix an issue with the `send_without_emails/2` function not actually preventing completion emails
+
 ## 0.2.3
 
 - update the `send_without_emails/1` function to also pass the new `sendCompletionEmail` flag
