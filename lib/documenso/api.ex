@@ -3,9 +3,10 @@ defmodule Documenso.Api do
 
   def new(options \\ []) when is_list(options) do
     token = Application.fetch_env!(:documenso_ex, :api_key)
+    base_url = Application.get_env(:documenso_ex, :base_url, @base_url)
 
     [
-      base_url: base_url(),
+      base_url: base_url,
       auth: {:bearer, token}
     ]
     |> Req.new()
@@ -26,8 +27,6 @@ defmodule Documenso.Api do
   @spec request!(String.t(), Keyword.t()) :: map()
   def request!(url, options \\ []),
     do: Req.request!(new(url: parse_url(url)), options)
-
-  defp base_url, do: @base_url
 
   defp parse_url(url) when is_binary(url), do: url
 end
