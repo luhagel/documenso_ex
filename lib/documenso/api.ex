@@ -1,10 +1,11 @@
 defmodule Documenso.Api do
-  @base_url Application.compile_env(:documenso_ex, :base_url, "https://app.documenso.com/api/v1")
+  @base_url "https://app.documenso.com/api/v1"
 
   def new(options \\ []) when is_list(options) do
     token = Application.fetch_env!(:documenso_ex, :api_key)
+    base_url = Application.get_env(:documenso_ex, :base_url, @base_url)
 
-    [base_url: base_url(), auth: {:bearer, token}]
+    [base_url: base_url, auth: {:bearer, token}]
     |> Keyword.merge(default_options())
     |> Req.new()
     |> Req.Request.append_request_steps(
@@ -27,8 +28,6 @@ defmodule Documenso.Api do
 
   @doc false
   def default_options, do: Application.get_env(:documenso_ex, :req_options, [])
-
-  defp base_url, do: @base_url
 
   defp parse_url(url) when is_binary(url), do: url
 end

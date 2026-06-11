@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.1
+- make base_url configurable at runtime, not just compiletime
+
 ## 0.4.0
 - support overriding the base url by defining `config :documenso_ex, base_url: "https://documenso.example.com/api/v1"`
 - update dependencies
