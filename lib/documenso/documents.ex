@@ -5,8 +5,10 @@ defmodule Documenso.Documents do
     List all documents. Return an error tuple if the request fails.
   """
   def list() do
-    with {:ok, %Req.Response{status: 200, body: body}} <- request("/documents") do
-      {:ok, body["documents"]}
+    case request("/documents") do
+      {:ok, %Req.Response{status: 200, body: body}} -> {:ok, body["documents"]}
+      {:ok, %Req.Response{} = resp} -> {:error, resp}
+      {:error, _} = err -> err
     end
   end
 
@@ -14,7 +16,13 @@ defmodule Documenso.Documents do
     List all documents. Raise an exception if the request fails.
   """
   def list!() do
-    request!("/documents").body["documents"]
+    case request!("/documents") do
+      %Req.Response{status: 200, body: body} ->
+        body["documents"]
+
+      %Req.Response{} = resp ->
+        raise "Documenso.Documents.list! failed: #{inspect(resp)}"
+    end
   end
 
   @doc """
@@ -106,14 +114,12 @@ defmodule Documenso.Documents do
   def upload_document(url, file, type \\ :binary)
 
   def upload_document(url, file, :path) do
-    file =
-      File.read!(file) |> Base.encode64()
-
-    Req.put(url, form: file)
+    encoded = file |> File.read!() |> Base.encode64()
+    Req.put(url, [form: encoded] ++ Documenso.Api.default_options())
   end
 
   def upload_document(url, file, :binary) do
-    Req.put(url, body: file)
+    Req.put(url, [body: file] ++ Documenso.Api.default_options())
   end
 
   @doc """
@@ -124,10 +130,11 @@ defmodule Documenso.Documents do
   """
   def create_and_upload(attrs, file) do
     with {:ok, %Req.Response{status: 200, body: body}} <- create(attrs),
-         {:ok, %Req.Response{status: 200, body: _}} <- upload_document(body["uploadUrl"], file) do
+         {:ok, %Req.Response{status: 200}} <- upload_document(body["uploadUrl"], file) do
       {:ok, body}
     else
-      {:error, error} -> {:error, error}
+      {:ok, %Req.Response{} = resp} -> {:error, resp}
+      {:error, _} = err -> err
     end
   end
 

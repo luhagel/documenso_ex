@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+- support overriding the base url by defining `config :documenso_ex, base_url: "https://documenso.example.com/api/v1"`
+- update dependencies
+
 ## 0.3.0
 
 - add a document `delete/1` and `delete!` function
