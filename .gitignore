@@ -26,3 +26,4 @@ documenso_ex-*.tar
 /tmp/
 
 *.secret.exs
+.DS_Store

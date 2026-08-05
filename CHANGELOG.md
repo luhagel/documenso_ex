@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.2
+- update req and relax version requirements
+- 
 ## 0.4.1
 - make base_url configurable at runtime, not just compiletime
 
