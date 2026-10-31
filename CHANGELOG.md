@@ -1,8 +1,22 @@
 # Changelog
 
+## 1.0.0 (unreleased)
+
+Switches to the Documenso API v2, since v1 is removed on 1 March 2027. See "Upgrading from 0.4" in the README.
+
+- replace `Documenso.Documents` with `Documenso.Envelopes` and `Documenso.Fields`
+- replace the `base_url` config with `instance_url`, without the `/api/v1` suffix
+- return `{:ok, body}` or `{:error, %Documenso.Error{}}` from every function, and raise `Documenso.Error` from `!` variants
+- accept `api_key:` and `instance_url:` on every call, to work with several teams
+- add `Documenso.Envelopes.stream/2`, which pages through all envelopes
+- retry rate limited requests, including POSTs
+- add `Documenso.Webhook.verify/2`, `Documenso.Webhook.Plug` and `Documenso.Recipients.signing_url/2`
+- ship `usage-rules.md` for coding agents
+- update dependencies and require `req >= 0.7.5`. `plug ~> 1.20` is optional and only needed for `Documenso.Webhook.Plug`
+
 ## 0.4.2
 - update req and relax version requirements
-- 
+
 ## 0.4.1
 - make base_url configurable at runtime, not just compiletime
 
