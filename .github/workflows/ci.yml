@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [trunk]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Elixir ${{ matrix.elixir }} / OTP ${{ matrix.otp }}
+    runs-on: ubuntu-latest
+    env:
+      MIX_ENV: test
+    strategy:
+      matrix:
+        include:
+          # Oldest versions mix.exs allows
+          - elixir: "1.17"
+            otp: "27"
+          - elixir: "1.20"
+            otp: "29"
+            lint: true
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: erlef/setup-beam@v1
+        with:
+          elixir-version: ${{ matrix.elixir }}
+          otp-version: ${{ matrix.otp }}
+
+      - uses: actions/cache@v6
+        with:
+          path: |
+            deps
+            _build
+          key: mix-${{ runner.os }}-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('mix.lock') }}
+          restore-keys: mix-${{ runner.os }}-${{ matrix.elixir }}-${{ matrix.otp }}-
+
+      - run: mix deps.get
+
+      - if: matrix.lint
+        run: mix format --check-formatted
+
+      - if: matrix.lint
+        run: mix deps.unlock --check-unused
+
+      - if: matrix.lint
+        run: mix hex.audit
+
+      - if: matrix.lint
+        run: mix compile --warnings-as-errors
+
+      - run: mix test
